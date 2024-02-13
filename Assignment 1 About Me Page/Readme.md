@@ -23,10 +23,10 @@ The following **bonus** features are implemented:
 
 ## Screenshot and/or Video Walkthrough
 
-<img src="/Images/Screenshot (92).png" title='About Me Page' width='' alt='About Me Page Example' />
-<img src="/Images/Screenshot (91).png" title='About Me Page' width='' alt='About Me Page Example' />
-<img src="/Images/Screenshot 2024-02-09 110032.png" title='About Me Page Code' width='' alt='About Me Page HTML Example' />
-<img src="/Images/Screenshot 2024-02-09 110043.png" title='About Me Page Code' width='' alt='About Me Page CSS Example' />
+<img src="Images/Screenshot (92).png" title='About Me Page' width='' alt='About Me Page Example' />
+<img src="Images/Screenshot (91).png" title='About Me Page' width='' alt='About Me Page Example' />
+<img src="Images/Screenshot 2024-02-09 110032.png" title='About Me Page Code' width='' alt='About Me Page HTML Example' />
+<img src="Images/Screenshot 2024-02-09 110043.png" title='About Me Page Code' width='' alt='About Me Page CSS Example' />
 
 
 ## Notes:
