@@ -23,8 +23,10 @@ The following **bonus** features are implemented:
 
 ## Screenshot and/or Video Walkthrough
 
-<a href="https://imgur.com/Jh0xvc6"><img src="https://i.imgur.com/Jh0xvc6.png" title="source: imgur.com" /></a>
-<a href="https://imgur.com/NUKML8V"><img src="https://i.imgur.com/NUKML8V.png" title="source: imgur.com" /></a>
+<img src="/Images/Screenshot (92).png" title='About Me Page' width='' alt='About Me Page Example' />
+<img src="/Images/Screenshot (91).png" title='About Me Page' width='' alt='About Me Page Example' />
+<img src="/Images/Screenshot 2024-02-09 110032.png" title='About Me Page Code' width='' alt='About Me Page HTML Example' />
+<img src="/Images/Screenshot 2024-02-09 110043.png" title='About Me Page Code' width='' alt='About Me Page CSS Example' />
 
 
 ## Notes:
