@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AboutMeHTML = () => {
+    // Initialize state to track the number of clicks
+  const [numClicks, setNumClicks] = useState(0);
+
+  // Function to handle button click
+  const handleButtonClick = () => {
+    setNumClicks(prevNumClicks => prevNumClicks + 1);
+  };
+
+  // Expose numClicks to global scope on component mount
+  useEffect(() => {
+    window.numClicks = numClicks;
+  }, [numClicks]);
   return (
     
         <body>
@@ -8,7 +20,7 @@ const AboutMeHTML = () => {
                 
                 
             </header>
-            <button id="scrollToBottomButton">Scroll to Bottom</button>
+            <button id="scrollToBottomButton" onClick={handleButtonClick}>Scroll to Bottom</button>
             <section class="introduction-section">
                 
                 <p class='masthead-intro'>About Me</p>
