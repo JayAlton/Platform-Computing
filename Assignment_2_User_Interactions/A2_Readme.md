@@ -22,8 +22,8 @@ The following **bonus** features are implemented:
 
 ## Screenshot and/or Video Walkthrough
 
-<img src="/Images/About_Me_on_React" title='About Me on React' width='' alt='Image of about me on react' />
-<img src="/Images/metric_tracker_output" title='Metric Tracker' width='' alt='Image of metric tracker console outputs' />
+<img src="Images/About_Me_on_React.png" title='About Me on React' width='' alt='Image of about me on react' />
+<img src="Images/metric_tracker_output.png" title='Metric Tracker' width='' alt='Image of metric tracker console outputs' />
 
 
 ## Notes:
