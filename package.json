@@ -3,6 +3,7 @@
     "html-loader": "^5.0.0"
   },
   "dependencies": {
+    "mongodb": "^6.5.0",
     "selenium-webdriver": "^4.18.1"
   }
 }
