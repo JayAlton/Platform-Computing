@@ -1,0 +1,58 @@
+# metric_tracker.py
+
+import subprocess
+import csv
+import collections
+import time
+import os
+from selenium import webdriver
+
+def writeToCSV(filename: str, metrics: list):
+    if not metrics:
+        print("No metrics to write.")
+        return
+
+    with open(file=filename, mode="w", newline="") as fp:
+        writer = csv.DictWriter(fp, fieldnames=metrics[0].keys())
+        writer.writeheader()
+        writer.writerows(metrics)
+
+def main():
+    metrics_tracker = []
+    num_users = 2
+    base_url = "http://localhost:3000"  # Your React app URL
+    
+    for user_id in range(1, num_users + 1):
+        script_path = f"Control/user{user_id}.py"
+        driver = webdriver.Chrome()
+
+        if not os.path.exists(script_path):
+            print(f"User script {user_id} does not exist. Skipping...")
+            driver.quit()
+            continue
+        
+        print(f"Running user script: {script_path}")
+        
+        start_time = time.time()
+        try:
+            user_module = __import__(f"Control.user{user_id}", fromlist=["userAction"])
+            user_module.userAction(driver, base_url)
+        except Exception as e:
+            print(f"Error while running user script for user {user_id}: {e}")
+        finally:
+            driver.quit()
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"User script {user_id} executed in {execution_time:.2f} seconds.")
+        metrics_tracker.append({"User": user_id, "Presence Time": execution_time})
+
+    print("Metrics from all users:")
+    print(metrics_tracker)
+    writeToCSV("metrics.csv", metrics_tracker)
+
+    total_presence_time = sum(d["Presence Time"] for d in metrics_tracker)
+    average_presence_time = total_presence_time / len(metrics_tracker)
+    print(f"Average Presence Time: {average_presence_time} seconds")
+
+if __name__ == "__main__":
+    main()

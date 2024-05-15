@@ -107,8 +107,8 @@
 
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 const Symbols = require('./lib/symbols')
 const command = require('./lib/command')
 const http = require('./http')
@@ -116,9 +116,9 @@ const io = require('./io')
 const remote = require('./remote')
 const webdriver = require('./lib/webdriver')
 const zip = require('./io/zip')
-const { Browser, Capabilities } = require('./lib/capabilities')
+const { Browser, Capabilities, Capability } = require('./lib/capabilities')
 const { Zip } = require('./io/zip')
-const { getPath } = require('./common/driverFinder')
+const { getBinaryPaths } = require('./common/driverFinder')
 const FIREFOX_CAPABILITY_KEY = 'moz:firefoxOptions'
 
 /**
@@ -444,6 +444,7 @@ const ExtensionCommand = {
   SET_CONTEXT: 'setContext',
   INSTALL_ADDON: 'install addon',
   UNINSTALL_ADDON: 'uninstall addon',
+  FULL_PAGE_SCREENSHOT: 'fullPage screenshot',
 }
 
 /**
@@ -470,6 +471,8 @@ function configureExecutor(executor) {
   executor.defineCommand(ExtensionCommand.INSTALL_ADDON, 'POST', '/session/:sessionId/moz/addon/install')
 
   executor.defineCommand(ExtensionCommand.UNINSTALL_ADDON, 'POST', '/session/:sessionId/moz/addon/uninstall')
+
+  executor.defineCommand(ExtensionCommand.FULL_PAGE_SCREENSHOT, 'GET', '/session/:sessionId/moz/screenshot/full')
 }
 
 /**
@@ -538,7 +541,7 @@ class Driver extends webdriver.WebDriver {
       configureExecutor(executor)
     } else if (opt_executor instanceof remote.DriverService) {
       if (!opt_executor.getExecutable()) {
-        const { driverPath, browserPath } = getPath(caps)
+        const { driverPath, browserPath } = getBinaryPaths(caps)
         opt_executor.setExecutable(driverPath)
         firefoxBrowserPath = browserPath
       }
@@ -547,7 +550,7 @@ class Driver extends webdriver.WebDriver {
     } else {
       let service = new ServiceBuilder().build()
       if (!service.getExecutable()) {
-        const { driverPath, browserPath } = getPath(caps)
+        const { driverPath, browserPath } = getBinaryPaths(caps)
         service.setExecutable(driverPath)
         firefoxBrowserPath = browserPath
       }
@@ -563,6 +566,7 @@ class Driver extends webdriver.WebDriver {
       } else {
         caps.set(FIREFOX_CAPABILITY_KEY, { binary: firefoxBrowserPath })
       }
+      caps.delete(Capability.BROWSER_VERSION)
     }
 
     return /** @type {!Driver} */ (super.createSession(executor, caps, onQuit))
@@ -644,6 +648,16 @@ class Driver extends webdriver.WebDriver {
   async uninstallAddon(id) {
     id = await Promise.resolve(id)
     return this.execute(new command.Command(ExtensionCommand.UNINSTALL_ADDON).setParameter('id', id))
+  }
+
+  /**
+   * Take full page screenshot of the visible region
+   *
+   * @return {!Promise<string>} A promise that will be
+   *     resolved to the screenshot as a base-64 encoded PNG.
+   */
+  takeFullPageScreenshot() {
+    return this.execute(new command.Command(ExtensionCommand.FULL_PAGE_SCREENSHOT))
   }
 }
 

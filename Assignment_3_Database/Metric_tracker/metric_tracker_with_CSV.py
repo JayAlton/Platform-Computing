@@ -16,6 +16,7 @@ def writeToCSV(filename : str, metrics : dict):
 
 
 def main():
+    print("print to console")
     # Initialize browser
     driver = webdriver.Chrome()
 
